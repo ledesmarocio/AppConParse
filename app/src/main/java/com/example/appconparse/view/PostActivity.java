@@ -159,7 +159,7 @@ public class PostActivity extends AppCompatActivity {
         binding.recyclerView.setVisibility(hasImages ? View.VISIBLE : View.GONE);
         binding.uploadImage.setVisibility(imagenesUrls.size() < MAX_IMAGES ? View.VISIBLE : View.GONE);
     }
-
+//comentario
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
