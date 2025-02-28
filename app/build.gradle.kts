@@ -72,4 +72,6 @@ dependencies {
     implementation ("androidx.media3:media3-ui:1.4.1")
     // For building media playback UIs for Android TV using the Jetpack Leanback library
     implementation ("androidx.media3:media3-ui-leanback:1.4.1")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
 }
