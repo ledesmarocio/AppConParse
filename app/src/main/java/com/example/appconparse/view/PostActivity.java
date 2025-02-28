@@ -24,7 +24,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import com.example.appconparse.model.Post;
 import com.example.appconparse.util.Validaciones;
-import com.parse.ParseObject;
+
 
 import java.util.ArrayList;
 import java.util.List;
