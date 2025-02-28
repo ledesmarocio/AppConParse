@@ -14,6 +14,7 @@ import com.example.appconparse.adapters.PostAdapter;
 import com.example.appconparse.databinding.FragmentHomeBinding;
 import com.example.appconparse.view.HomeActivity;
 import com.example.appconparse.view.MainActivity;
+import com.example.appconparse.view.PostActivity;
 import com.example.appconparse.viewmodel.AuthViewModel;
 import com.example.appconparse.viewmodel.PostViewModel;
 import androidx.annotation.NonNull;

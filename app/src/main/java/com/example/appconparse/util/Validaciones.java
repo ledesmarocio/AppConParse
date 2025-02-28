@@ -37,7 +37,7 @@ public class Validaciones {
         }
         return null; // Contraseña válida
     }
-    public static boolean controlarPasword(String pass){
+    public static boolean controlarPassword(String pass){
 
         return  (pass!=null && pass.length()>=6);
     }
