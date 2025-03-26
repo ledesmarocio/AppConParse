@@ -1,19 +1,23 @@
 package com.example.appconparse.viewmodel;
 
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.appconparse.providers.PostProvider;
 import com.parse.ParseObject;
+
 import com.parse.ParseUser;
 
 import java.util.List;
+
 
 public class PostDetailViewModel extends ViewModel {
 
     private final MutableLiveData<List<ParseObject>> commentsLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> successLiveData = new MutableLiveData<>();
     private final PostProvider postProvider;
 
     public PostDetailViewModel() {
@@ -28,7 +32,11 @@ public class PostDetailViewModel extends ViewModel {
         return errorLiveData;
     }
 
-    public void fetchComments(String postId) {
+    public LiveData<String> getSuccessLiveData() {
+        return successLiveData;
+    }
+
+    public void fetchCommentario(String postId) {
         postProvider.fetchComments(postId, new PostProvider.CommentsCallback() {
             @Override
             public void onSuccess(List<ParseObject> comments) {
@@ -42,16 +50,29 @@ public class PostDetailViewModel extends ViewModel {
         });
     }
 
-    public void saveComment(String postId, String commentText) {
+    public void eliminarPost(String postId) {
+        postProvider.deletePost(postId).observeForever(mensaje -> {
+            if (mensaje.equals("Post eliminado correctamente")) {
+                successLiveData.postValue(mensaje);
+            } else {
+                errorLiveData.postValue(mensaje);
+            }
+        });
+    }
+
+    public void grabaComentario(String postId, String commentText) {
         ParseUser currentUser = ParseUser.getCurrentUser();
         postProvider.saveComment(postId, commentText, currentUser, e -> {
             if (e == null) {
-                fetchComments(postId);
+                fetchCommentario(postId); // Actualiza la lista de comentarios
             } else {
                 errorLiveData.postValue(e.getMessage());
             }
         });
     }
 }
+
+
+
 
 

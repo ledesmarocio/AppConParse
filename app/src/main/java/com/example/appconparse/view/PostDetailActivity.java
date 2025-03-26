@@ -1,5 +1,7 @@
 package com.example.appconparse.view;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -7,39 +9,91 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.appconparse.R;
+import com.example.appconparse.adapters.ComentarioAdapter;
 import com.example.appconparse.adapters.EfectoTransformer;
 import com.example.appconparse.adapters.ImageSliderAdapter;
 import com.example.appconparse.databinding.ActivityPostDetailBinding;
 import com.example.appconparse.viewmodel.PostDetailViewModel;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class PostDetailActivity extends AppCompatActivity {
     private ActivityPostDetailBinding binding;
-    private PostDetailViewModel viewModel;
+    private PostDetailViewModel postDetailViewModel;
+    private ComentarioAdapter comentarioAdapter;
     private String postId;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        postDetailViewModel = new ViewModelProvider(this).get(PostDetailViewModel.class);
+
         binding = ActivityPostDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        viewModel = new ViewModelProvider(this).get(PostDetailViewModel.class);
-        postId=getIntent().getStringExtra("idPost");
+
+        postId = getIntent().getStringExtra("idPost");
+        if (postId == null || postId.isEmpty()) {
+            // Si postId es nulo o vacío, muestra un mensaje de error y sal de la función
+            Toast.makeText(PostDetailActivity.this, "ID de post no válido", Toast.LENGTH_SHORT).show();
+            return; // Salir si el ID no es válido
+        } else {
+            // Si postId es válido, procede con la acción
+            postDetailViewModel.fetchCommentario(postId);
+        }
+
+        binding.recyclerComentarios.setLayoutManager(new LinearLayoutManager(this));
+        comentarioAdapter = new ComentarioAdapter(new ArrayList<>());
+        binding.recyclerComentarios.setAdapter(comentarioAdapter);
+
+        // Observing comments
+        postDetailViewModel.getCommentsLiveData().observe(this, comentarios -> {
+            comentarioAdapter.setComentarios(comentarios);
+            comentarioAdapter.notifyDataSetChanged();
+        });
+
+        String currentUser = ParseUser.getCurrentUser().getUsername();
+        String perfilUserId = getIntent().getStringExtra("username");
+
+
+        if (currentUser != null && currentUser.equals(perfilUserId)) {
+            binding.btnEliminarPost.setVisibility(View.VISIBLE);
+            binding.btnEliminarPost.setOnClickListener(v -> confirmaBorrar());
+        } else {
+            binding.btnEliminarPost.setVisibility(View.GONE);
+        }
+
         detailInfo();
         setupObservers();
-        if (postId != null) {
-            viewModel.fetchComments(postId);
-        }
-        binding.fabComentar.setOnClickListener(v -> showDialogComment());
+
+        binding.fabComentar.setOnClickListener(v -> comentar());
     }
 
-    private void showDialogComment() {
+
+
+    private void confirmaBorrar() {
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Confirmación");
+        alert.setMessage("¿Estás seguro de que deseas eliminar este post?");
+
+        alert.setPositiveButton("Eliminar", (dialog, which) -> postDetailViewModel.eliminarPost(postId));
+
+        alert.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+        alert.show();
+    }
+
+    private void comentar() {
         AlertDialog.Builder alert = new AlertDialog.Builder(PostDetailActivity.this);
-        alert.setTitle("¡COMENTARIO!");
+        alert.setTitle("COMENTAR");
         alert.setMessage("Ingresa tu comentario: ");
 
         EditText editText = new EditText(PostDetailActivity.this);
@@ -51,7 +105,6 @@ public class PostDetailActivity extends AppCompatActivity {
         editText.setLayoutParams(params);
         params.setMargins(36, 0, 36, 36);
 
-
         RelativeLayout container = new RelativeLayout(PostDetailActivity.this);
         RelativeLayout.LayoutParams relativeParams = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.MATCH_PARENT,
@@ -61,50 +114,44 @@ public class PostDetailActivity extends AppCompatActivity {
         container.addView(editText);
         alert.setView(container);
 
-
         alert.setPositiveButton("Ok", (dialog, which) -> {
             String value = editText.getText().toString().trim();
             if (!value.isEmpty()) {
-
-                viewModel.saveComment(postId, value);
+                postDetailViewModel.grabaComentario(postId, value);
             } else {
                 Toast.makeText(PostDetailActivity.this, "El comentario no puede estar vacío", Toast.LENGTH_SHORT).show();
             }
         });
 
-        alert.setNegativeButton("Cancelar", (dialog, which) -> {
-
-            dialog.dismiss();
-        });
-
+        alert.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
 
         alert.show();
     }
 
     private void setupObservers() {
-        viewModel.getCommentsLiveData().observe(this, comments -> {
-
+        postDetailViewModel.getCommentsLiveData().observe(this, comments -> {
             // updateUI(comments);
         });
 
-
-        viewModel.getErrorLiveData().observe(this, error -> {
+        postDetailViewModel.getErrorLiveData().observe(this, error -> {
             if (error != null) {
                 Toast.makeText(this, "Error: " + error, Toast.LENGTH_SHORT).show();
             }
         });
+
+        postDetailViewModel.getSuccessLiveData().observe(this, message -> {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            finish(); // Cierra la actividad tras eliminar el post
+        });
     }
 
-
-
-
     private void detailInfo() {
-
         binding.nameUser.setText(getIntent().getStringExtra("username"));
         binding.emailUser.setText(getIntent().getStringExtra("email"));
         binding.insta.setText(getIntent().getStringExtra("redsocial"));
 
         String fotoUrl = getIntent().getStringExtra("foto_perfil");
+        Log.d("FotoPerfil", "URL de foto: " + fotoUrl); // Verifica en Logcat si la URL está bien
         if (fotoUrl != null) {
             Picasso.get()
                     .load(fotoUrl)
@@ -120,7 +167,7 @@ public class PostDetailActivity extends AppCompatActivity {
         binding.lugar.setText(titulo);
         String categoria = "Categoria: " + getIntent().getStringExtra("categoria");
         binding.categoria.setText(categoria);
-        String comentario = "descripción: " + getIntent().getStringExtra("descripcion");
+        String comentario = "Descripción: " + getIntent().getStringExtra("descripcion");
         binding.description.setText(comentario);
         String duracion = "Duración: " + getIntent().getIntExtra("duracion", 0) + " día/s";
         binding.duracion.setText(duracion);
@@ -138,5 +185,6 @@ public class PostDetailActivity extends AppCompatActivity {
         }
     }
 }
+
 
 

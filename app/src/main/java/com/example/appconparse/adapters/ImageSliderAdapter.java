@@ -47,7 +47,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
                     .load(realPath)
                     .centerCrop()
                     .apply(new RequestOptions()
-                            .placeholder(R.drawable.uploadimg)
+                            .placeholder(R.drawable.uploading)
                             .error(R.drawable.ic_close))
                     .into(holder.imageView);
         } else {
@@ -55,7 +55,7 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
             Glide.with(holder.imageView.getContext())
                     .load(uri)
                     .apply(new RequestOptions()
-                            .placeholder(R.drawable.uploadimg)
+                            .placeholder(R.drawable.uploading)
                             .error(R.drawable.ic_close))
                     .into(holder.imageView);
         }

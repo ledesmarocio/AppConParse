@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Compartiendo el mundo</string>
+    <string name="app_name">Tu viaje</string>
     <string name="mis_experiencias">Mis Lugares Preferidos
 </string>
     <string name="Chats">Chats</string>
@@ -14,7 +14,7 @@
     <string name="titulo_post">Lugar que Visitaste</string>
     <string name="lugar">Lugar</string>
     <string name="comienzaUnChat">Comunicate</string>
-    <string name="registrate">REGISTRATE</string>
+    <string name="registrate">Registrate</string>
     <string name="nombre_usuario">"Nombre de Usuario"</string>
     <string name="correo">"Correo electrónico"</string>
     <string name="pass">"Contraseña"</string>
@@ -26,6 +26,10 @@
     <string name="actualizar">Actualizar Perfil</string>
     <string name="transtionname_picture">transitionnamepicture</string>
     <string name="cargando">Cargando datos...</string>
+    <string name="ingresa_comentario">Comentar</string>ingresa_comentario
+    <string name="desc_editar_datos">Mis datos</string>
+    <string name="mis_publicaciones">Mis publicaciones</string>
+
     <string-array name="categorias_array">
         <item>Naturaleza</item>
         <item>Montaña</item>

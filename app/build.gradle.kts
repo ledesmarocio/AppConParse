@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.appconparse"
-        minSdk = 21
+        minSdk = 26
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -64,7 +64,7 @@ dependencies {
     implementation("io.github.florent37:shapeofview:1.4.7")
 
     // Parse SDK
-    implementation("com.github.parse-community.Parse-SDK-Android:bolts-tasks:4.3.0")
+    implementation(libs.bolts.tasks)
     implementation("com.github.parse-community.Parse-SDK-Android:parse:4.3.0")
 
 
@@ -74,4 +74,5 @@ dependencies {
     implementation ("androidx.media3:media3-ui-leanback:1.4.1")
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.core:core:1.9.0")
 }

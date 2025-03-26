@@ -18,35 +18,59 @@ public class Post extends ParseObject {
         return getString("titulo");
     }
 
-    public void setTitulo(String titulo){
-        put("titulo",titulo);
+    public void setTitulo(String titulo) {
+        if (titulo != null) {
+            put("titulo", titulo);
+        } else {
+
+            put("titulo", "Sin titulo");
+        }
     }
 
     public String getDescripcion(){
         return getString("descripcion");
     }
     public void setDescripcion(String descripcion){
-        put("descripcion", descripcion);
+        if (descripcion != null) {
+            put("descripcion", descripcion);
+        } else {
+
+            put("descripcion", "Sin descripcion");
+        }
     }
 
     public int getDuracion(){
         return getInt("duracion");
     }
     public void setDuracion(int duracion){
-        put("duracion", duracion);
+        if (duracion!=0) {
+            put("duracion", duracion);
+        } else {
+
+            put("duracion", 0);
+        }
     }
 
     public String getCategoria(){
         return getString("categoria");
     }
     public void setCategoria(String categoria){
-        put("categoria", categoria);
+        if (categoria != null) {
+            put("categoria", categoria);
+        } else {
+            put("categoria", "Sin categoria");
+        }
     }
     public double getPresupuesto(){
         return getDouble("presupuesto");
     }
     public void setPresupuesto(Double presupuesto){
-        put("presupuesto", presupuesto);
+        if (presupuesto != null) {
+            put("presupuesto", presupuesto);
+        } else {
+
+            put("presupuesto", "0.0");
+        }
     }
 
     public List<String> getImagenes(){

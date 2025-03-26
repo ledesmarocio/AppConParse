@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,10 +26,18 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private List<Post> posts;
+    private Context context; //-----------ESTO TOQUE
+
 
     public PostAdapter(List<Post> posts){
+
         this.posts= posts;
     }
+
+    public void setContext(Context context) {
+        this.context = context; // ESTO TOQUEE
+    }
+
 
     @NonNull
     @Override
@@ -75,6 +84,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     Intent intent= new Intent(context, PostDetailActivity.class);
                     //Datos del Post
                     // Log.d("Postadapter", postDetail.getId() + postDetail.getTitulo());
+                    intent.putExtra("idPost", post.getId());
                     intent.putExtra("titulo", postDetail.getTitulo());
                     intent.putExtra("descripcion",postDetail.getDescripcion());
                     intent.putExtra("categoria",postDetail.getCategoria());
@@ -89,6 +99,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                         intent.putExtra("email", user.getEmail());
                         intent.putExtra("redsocial", user.getRedSocial());
                         intent.putExtra("foto_perfil", user.getFotoperfil());
+                        Log.d("FotoPerfil", "foto" +user.getFotoperfil());
                     }else{
                         Log.d("Postadapter", "User is null");
                     }
@@ -123,4 +134,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             ivImage3=itemView.findViewById(R.id.ivImage3);
         }
     }
+    public void setPosts(List<Post> newPosts) {
+        posts.clear();
+        posts.addAll(newPosts);
+        notifyDataSetChanged();
+    }
+
 }

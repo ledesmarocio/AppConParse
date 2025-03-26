@@ -3,28 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_color_background">
     <!-- AppBarLayout con CollapsingToolbarLayout -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:background="@drawable/headerbkg">
+        android:background="@android:color/transparent">
         
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:contentScrim="?attr/colorPrimary">
+            app:contentScrim="?attr/colorPrimary"
+            >
             <ImageView
                 android:id="@+id/uploadImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/uploadimg"
-                app:layout_collapseMode="parallax"/>
+                android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+                android:layout_gravity="center"
+            android:src="@drawable/uploading"
+            app:layout_collapseMode="parallax"/>
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tools_filtro"
+                app:title=" "
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"/>
@@ -51,9 +55,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/titulo_ppal"
+                    android:textStyle="bold"
                     android:textSize="24sp"
                     android:textAlignment="center"
-                    android:textColor="@color/lavender"/>
+                    android:textColor="@color/pink"/>
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"
                     android:layout_width="match_parent"
@@ -71,7 +76,7 @@
                     android:hint="@string/titulo_post"
                     android:padding="16dp"
                     android:textSize="13sp"
-                    android:textColor="@color/lavender"/>
+                    android:textColor="@color/pink"/>
                 <EditText
                     android:id="@+id/etDescripcion"
                     android:layout_width="match_parent"
@@ -81,7 +86,7 @@
                     android:hint="@string/descripcion"
                     android:padding="16dp"
                     android:textSize="13sp"
-                    android:textColor="@color/lavender"/>
+                    android:textColor="@color/pink"/>
                 <Spinner
                     android:id="@+id/spinnerCategoria"
                     android:layout_width="match_parent"
@@ -98,7 +103,7 @@
                     android:hint="@string/duracion"
                     android:gravity="start|center_vertical"
                     android:inputType="number"
-                    android:textColor="@color/lavender"
+                    android:textColor="@color/pink"
                     android:textSize="13sp"/>
                     <EditText
                         android:id="@+id/etPresupuesto"
@@ -110,7 +115,7 @@
                         android:layout_marginTop="10dp"
                         android:padding="16dp"
                         android:gravity="start|center_vertical"
-                        android:textColor="@color/lavender"
+                        android:textColor="@color/pink"
                         android:textSize="13sp"/>
                 <Button
                     android:id="@+id/btnPublicar"
@@ -122,20 +127,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
     </androidx.core.widget.NestedScrollView>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        >
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/back_bottom"
-            android:scaleType="centerCrop"
-            android:layout_gravity="end"
-            />
-    </LinearLayout>
+
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

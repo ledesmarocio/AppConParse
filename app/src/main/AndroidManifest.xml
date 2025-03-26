@@ -15,17 +15,21 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@mipmap/avion"
+        android:label="Tu Viaje"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppConParse"
+
         tools:targetApi="31">
         <activity
-            android:name=".view.PostDetailActivity"
+            android:name=".view.MisDatosActivity"
             android:exported="false" />
         <activity
-            android:name=".view.UserActivity"
+            android:name=".view.MisPublicacionesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.PostDetailActivity"
             android:exported="false" />
         <activity
             android:name=".view.RegisterActivity"
@@ -55,6 +59,9 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="@string/back4app_client_key" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

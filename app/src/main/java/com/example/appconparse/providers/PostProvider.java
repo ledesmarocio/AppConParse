@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.example.appconparse.model.Post;
 import com.example.appconparse.model.User;
+import com.example.appconparse.viewmodel.PostViewModel;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -134,7 +135,71 @@ public class PostProvider {
         return result;
     }
 
-    public void removePost(String postId){
+    public LiveData<List<Post>> getPostsByCategory(String categoria){
+        MutableLiveData <List<Post>> result= new MutableLiveData<>();
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        Log.d("PostProvider", "Obteniendo posts para la categoría: " + categoria);
+        if(categoria != null && !categoria.isEmpty()){
+            query.whereEqualTo("categoria", categoria);
+        }
+        query.include("user");// Asegúrate de incluir el usuario relacionado
+        query.findInBackground((posts, e)->{
+            if (e==null){
+                List<Post> postList= new ArrayList<>();
+                for(ParseObject postObject : posts){
+                    Log.d("PostObject", "ID: "+ postObject.getObjectId() +", Title: "+ postObject.getString("titulo"));
+                    Post post= ParseObject.create(Post.class);
+                    post.setObjectId(postObject.getObjectId());
+                    post.setTitulo(postObject.getString("titulo"));
+                    post.setDescripcion(postObject.getString("descripcion"));
+                    post.setDuracion(postObject.getInt("duracion"));
+                    post.setCategoria(postObject.getString("categoria"));
+                    post.setPresupuesto(postObject.getDouble("presupuesto"));
+
+                    //Obtener imágenes
+                    ParseRelation<ParseObject> relation= postObject.getRelation("images");
+                    try{
+                        List<ParseObject> images= relation.getQuery().find();
+                        List<String> imageUrls=new ArrayList<>();
+                        for(ParseObject imageObject: images){
+                            imageUrls.add(imageObject.getString("url"));
+                        }
+                        post.setImagenes(imageUrls);
+                    }catch (ParseException parseException){
+                        parseException.printStackTrace();
+                    }
+
+                    //Mapeo del usuario
+                    ParseUser parseUser= postObject.getParseUser("user");
+                    if(parseUser != null){
+                        try{
+                            parseUser.fetchIfNeeded();
+                            User user=  ParseObject.createWithoutData(User.class, parseUser.getObjectId());
+                            user.setUsername(parseUser.getUsername());
+                            user.setEmail(parseUser.getEmail());
+                            user.setFotoperfil(parseUser.getString("fotoperfil"));
+                            user.setRedSocial(parseUser.getString("redSocial"));
+
+                            post.setUser((user)); //Asignar el usuario convertido al post
+                        }catch (ParseException parseException){
+                            Log.e("FetchUserError", "Error al obtener el usuario: ", parseException);
+                        }
+                    }else{
+                        Log.d("UserPointer", "User pointer es null");
+                    }
+                    postList.add(post);
+                }
+                result.setValue(postList);
+            } else {
+                result.setValue(new ArrayList<>());
+                Log.e("ParseError", "Error al recuperar todos los posts",e);
+            }
+        });
+        return result;
+
+    }
+
+    /*public void removePost(String postId){
         ParseQuery<Post> query= ParseQuery.getQuery(Post.class);
         query.getInBackground(postId, (post,e) ->{
             if(e==null){
@@ -149,6 +214,29 @@ public class PostProvider {
                 Log.e("PostDelete", "Error al encontrar el post: ", e);
             }
         });
+    }*/
+    public LiveData<String> deletePost(String postId) {
+        MutableLiveData<String> result = new MutableLiveData<>();
+
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.getInBackground(postId, (post, e) -> {
+            if (e == null) {
+                post.deleteInBackground(e1 -> {
+                    if (e1 == null) {
+                        Log.d("PostDelete", "Post eliminado con éxito.");
+                        result.postValue("Post eliminado correctamente");
+                    } else {
+                        Log.e("PostDelete", "Error al eliminar el post: ", e1);
+                        result.postValue("Error al eliminar el post: " + e1.getMessage());
+                    }
+                });
+            } else {
+                Log.e("PostDelete", "Error al encontrar el post: ", e);
+                result.postValue("Error al encontrar el post: " + e.getMessage());
+            }
+        });
+
+        return result;
     }
 
     public LiveData<Post> getPostDetail(String postId){
@@ -176,7 +264,7 @@ public class PostProvider {
                    user.setUsername(userObject.getString("username"));
                    user.setEmail(userObject.getString("email"));
                    user.setFotoperfil(userObject.getString("foto_perfil"));
-
+                    user.setRedSocial(userObject.getString("redsocial"));
                    post.setUser(user);
                 }catch (ParseException userFetchException){
                     userFetchException.printStackTrace();
@@ -192,6 +280,8 @@ public class PostProvider {
         });
         return result;
     }
+
+
     
     public interface CommentsCallback{
         void onSuccess(List<ParseObject> comments);
@@ -221,5 +311,7 @@ public class PostProvider {
 
         comentario.saveInBackground(callback);
     }
+
+
 
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="primary">#8692f7</color>
+    <color name="primary">#FFAB91</color>
     <color name="white">#FFFFFFFF</color>
     <color name="red">#F6292F</color>
     <color name="red_osc">#C9272C</color>
@@ -13,4 +13,6 @@
     <color name="lavender">#8692f7</color>
     <color name="colorGray">#D5D2D2</color>
     <color name="colorGrayLight">#F1EFEF</color>
+    <color name="colorDarkGray">#4E4D4D</color>
+    <color name="pink">#FF6F61</color>
 </resources>

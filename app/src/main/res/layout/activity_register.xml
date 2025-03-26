@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_color_background"
     tools:context=".view.RegisterActivity">
 
     <LinearLayout
@@ -17,17 +18,13 @@
             android:layout_height="220dp"
             android:elevation="4dp"
             app:shape_arc_height="20dp"
-            app:shape_arc_position="bottom"
-            >
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primary"/>
+            app:shape_arc_position="bottom">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/registrate"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:textAlignment="center"
@@ -36,8 +33,9 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:src="@drawable/ic_person"
+
                 android:layout_gravity="center"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="35dp"/>
         </io.github.florent37.shapeofview.shapes.ArcView>
         <LinearLayout
             android:layout_width="match_parent"
@@ -170,6 +168,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="REGISTRATE"
+        android:textStyle="bold"
         android:layout_gravity="bottom"
         android:layout_margin="20dp"
         android:backgroundTint="@color/primary"

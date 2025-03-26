@@ -51,6 +51,9 @@ public class PostActivity extends AppCompatActivity {
         setupCategorySpinner();
         setupGalleryLauncher();
         binding.btnPublicar.setOnClickListener(v -> publicarPost());
+
+
+
     }
 
     private void setupRecyclerView() {
@@ -70,10 +73,10 @@ public class PostActivity extends AppCompatActivity {
 
     private void setupCategorySpinner() {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this, R.layout.spinner_item, getResources().getStringArray(R.array.categorias_array)
+                this, R.layout.spinner_item, getResources().getStringArray(R.array.categorias_array) // crea y configura el spinner con las categorias
         );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        binding.spinnerCategoria.setAdapter(adapter);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // define layout de los items en el desplegable
+        binding.spinnerCategoria.setAdapter(adapter); //asigna el spinner junto con las categorias
         binding.spinnerCategoria.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

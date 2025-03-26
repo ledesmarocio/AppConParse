@@ -5,27 +5,48 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_color_background"
     android:layout_marginBottom="70dp"
     tools:context=".view.fragments.HomeFragment">
+
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:background="@android:color/transparent">
+
+
         <androidx.appcompat.widget.Toolbar
+
             android:id="@+id/tools"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@drawable/headerbkg"
-            app:title="Publicaciones"
-            app:titleTextColor="@android:color/white"/>
+            android:background="@android:color/transparent"
+            app:title=" ">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/publicaciones"
+                android:textColor="@android:color/black"
+                android:fontFamily="@font/alata"
+                android:textSize="25sp"
+                android:layout_marginStart="16dp"
+                android:textStyle="bold"
+                android:gravity="center_vertical" />
+        </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+
     <ImageView
         android:id="@+id/fab"
         android:layout_width="50dp"

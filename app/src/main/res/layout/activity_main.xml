@@ -1,124 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.MainActivity"
+    android:background="@drawable/gradient_color_background">
+
+
+
+    <!-- Contenido -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <io.github.florent37.shapeofview.shapes.DiagonalView
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
 
-            app:shape_diagonal_angle="10"
-            app:shape_diagonal_position="bottom">
-            <View
+            android:layout_gravity="bottom"
+            android:layout_marginTop="50dp"
+
+            >
+            <!-- Fondo -->
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/primary"/>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                >
 
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/app_name"
-                    android:textColor="@color/colorGray"
-
-                    android:textSize="13sp" />
-                <ImageView
-                    android:layout_width="220dp"
-                    android:layout_height="180dp"
-                    android:src="@drawable/icono_ppal"
-                    android:padding="10dp" />
+                android:scaleType="centerCrop"
 
 
+                android:src="@drawable/pngwing"
+                android:layout_height="200dp"/>
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mi viaje"
+                android:fontFamily="@font/alata"
+                android:textColor="@android:color/black"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginTop="20dp" />
 
-            </LinearLayout>
+        </FrameLayout>
 
-        </io.github.florent37.shapeofview.shapes.DiagonalView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="70dp"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_email"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center"
-                />
+            android:orientation="vertical"
+            android:padding="80dp">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxBackgroundMode="none"
-                >
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/itUsuario"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/alata"
+                    android:hint="Correo"
+
                     android:inputType="textEmailAddress"
-                    android:hint="@string/correo"
-                    android:singleLine="true"
-                    />
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_gravity="center">
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_lock"
-                android:layout_marginRight="5dp"
-                android:layout_gravity="center"
-                />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxBackgroundMode="none"
-                >
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                android:layout_marginTop="10dp">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/itPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/pass"
-                    android:inputType="textPassword">
-
-                </com.google.android.material.textfield.TextInputEditText>
+                    android:fontFamily="@font/alata"
+                    android:hint="Contraseña"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INICIAR SESIÓN"
+                android:fontFamily="@font/alata"
+                android:layout_marginTop="40dp"
+                android:backgroundTint="@color/black" />
         </LinearLayout>
-        <Button
-            android:id="@+id/btLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="INICIAR SESIÓN"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
-            android:backgroundTint="@color/primary"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -128,6 +112,7 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="20dp">
         <TextView
+            android:fontFamily="@font/alata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/sin_cuenta"
@@ -137,8 +122,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:fontFamily="@font/alata"
             android:text="@string/registrate"
+            android:textColor="@color/pink"
             android:textStyle="bold"
             android:textSize="17sp" />
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_gravity="bottom"
+
+        android:scaleType="fitXY" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
